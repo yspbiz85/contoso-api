@@ -8,47 +8,45 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/graph")
 public class GraphController {
 
     @Autowired
     GraphService graphService;
 
-    @PostMapping("/graph/save")
+    @PostMapping("/save")
     public ResponseEntity<Graph> saveGraph(Authentication authentication,
                                            @RequestBody GraphSaveRequest graphSaveRequest) {
         return new ResponseEntity<>(this.graphService.saveGraph(authentication,graphSaveRequest),
                 HttpStatus.CREATED);
     }
 
-    @GetMapping("/graph/{graphId}")
+    @GetMapping("/{graphId}")
     public ResponseEntity<Graph> findGraph(Authentication authentication,@PathVariable("graphId") UUID graphId) {
         return new ResponseEntity<>(this.graphService.findGraph(authentication,graphId),HttpStatus.OK);
     }
 
-    @GetMapping("/graph/all")
+    @GetMapping("/all")
     public ResponseEntity<List<Graph>> findAllGraph(Authentication authentication) {
         return new ResponseEntity<>(this.graphService.findAllGraph(authentication),HttpStatus.OK);
     }
 
-    @PutMapping("/graph/{graphId}")
+    @PutMapping("/{graphId}")
     public ResponseEntity<Graph> updateGraph(Authentication authentication, @RequestBody GraphSaveRequest graphSaveRequest) {
         return new ResponseEntity<>(this.graphService.updateGraph(authentication,graphSaveRequest),HttpStatus.OK);
     }
 
-    @DeleteMapping("/graph/{graphId}")
+    @DeleteMapping("/{graphId}")
     public ResponseEntity<Boolean> deleteGraph(Authentication authentication,@PathVariable("graphId") UUID graphId) {
         return new ResponseEntity<>(this.graphService.deleteGraph(authentication,graphId),HttpStatus.NO_CONTENT);
     }
 
-    @DeleteMapping("/graph/all")
+    @DeleteMapping("/all")
     public ResponseEntity<Boolean> deleteAllGraph(Authentication authentication) {
         return new ResponseEntity<>(this.graphService.deleteAllGraph(authentication),HttpStatus.NO_CONTENT);
     }
-
 }
