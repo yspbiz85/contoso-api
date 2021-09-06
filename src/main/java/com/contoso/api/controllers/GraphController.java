@@ -14,7 +14,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1")
-public class GamingController {
+public class GraphController {
 
     @Autowired
     GraphService graphService;
