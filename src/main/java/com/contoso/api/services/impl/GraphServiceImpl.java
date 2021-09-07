@@ -1,5 +1,6 @@
 package com.contoso.api.services.impl;
 
+import com.contoso.api.entities.Edge;
 import com.contoso.api.entities.Graph;
 import com.contoso.api.entities.Node;
 import com.contoso.api.exceptions.GraphException;
@@ -9,15 +10,15 @@ import com.contoso.api.repositories.GraphRepository;
 import com.contoso.api.services.GraphService;
 import com.contoso.api.utils.JwtTokenUtil;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.TreeSet;
-import java.util.UUID;
+
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -122,6 +123,7 @@ public class GraphServiceImpl implements GraphService {
     }
 
     private Boolean isGraphEdgesHasValidNode(GraphDao graphDao){
+        Boolean isValidEdges = false;
         //Collect all the nodes define for the graph to single set
         TreeSet<String> baseNodes = graphDao.getGraphData()
                                     .getNodes()
@@ -136,6 +138,15 @@ public class GraphServiceImpl implements GraphService {
                                     .flatMap(edge -> Stream.of(edge.getSource(),edge.getTarget()))
                                     .collect(Collectors.toCollection(TreeSet::new));
         //Check all the edge node is valid node from based node
-        return CollectionUtils.isEqualCollection(baseNodes,edgeNodes);
+        isValidEdges = CollectionUtils.isEqualCollection(baseNodes,edgeNodes);
+
+        //Verify All the edges have a weight
+        Set<Edge> filterNodes = graphDao.getGraphData().getEdges().stream().filter(edge -> ObjectUtils.isNotEmpty(edge.getWeight())
+                        && !StringUtils.equals(edge.getSource(),edge.getTarget()))
+                                .collect(Collectors.toSet());
+
+        isValidEdges = edgeNodes.size() == filterNodes.size();
+
+        return isValidEdges;
     }
 }

@@ -21,15 +21,25 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(Exception.class)
     public final ResponseEntity<Object> globalExceptionHandler(Exception exception, WebRequest request) {
         logger.error("General Exception stacktrace :: "+ ExceptionUtils.getStackTrace(exception));
-        ErrorDetails errorDetails = new ErrorDetails(new Timestamp(System.currentTimeMillis()), exception.getMessage(),  request.getDescription(false));
+        ErrorDetails errorDetails = new ErrorDetails(new Timestamp(System.currentTimeMillis()), exception.getMessage(),
+                request.getDescription(false));
         return new ResponseEntity<>(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(GraphException.class)
-    public final ResponseEntity<Object> graphExceptionHandler(Exception graphException) {
+    public final ResponseEntity<Object> graphExceptionHandler(GraphException graphException) {
         logger.error("Exception stacktrace For Graph Services :: "+ ExceptionUtils.getStackTrace(graphException));
-        ErrorDetails errorDetails = new ErrorDetails(new Timestamp(System.currentTimeMillis()), graphException.getMessage(),  graphException.getMessage());
+        ErrorDetails errorDetails = new ErrorDetails(new Timestamp(System.currentTimeMillis()),
+                graphException.getMessage(),  graphException.getMessage());
         return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public final ResponseEntity<Object> graphExceptionHandler(ResourceNotFoundException resourceNotFoundException) {
+        logger.error("Exception stacktrace For Resource Services :: "+ ExceptionUtils.getStackTrace(resourceNotFoundException));
+        ErrorDetails errorDetails = new ErrorDetails(new Timestamp(System.currentTimeMillis()),
+                resourceNotFoundException.getMessage(),  resourceNotFoundException.getMessage());
+        return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
     }
 
     @Data
