@@ -1,7 +1,6 @@
 package com.contoso.api.controllers;
 
-import com.contoso.api.entities.Graph;
-import com.contoso.api.model.GraphSaveRequest;
+import com.contoso.api.model.GraphDao;
 import com.contoso.api.services.GraphService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,25 +18,25 @@ public class GraphController {
     GraphService graphService;
 
     @PostMapping("/save")
-    public ResponseEntity<Graph> saveGraph(Authentication authentication,
-                                           @RequestBody GraphSaveRequest graphSaveRequest) {
-        return new ResponseEntity<>(this.graphService.saveGraph(authentication,graphSaveRequest),
+    public ResponseEntity<GraphDao> saveGraph(Authentication authentication,
+                                              @RequestBody GraphDao graphDao) {
+        return new ResponseEntity<>(this.graphService.saveGraph(authentication,graphDao),
                 HttpStatus.CREATED);
     }
 
     @GetMapping("/{graphId}")
-    public ResponseEntity<Graph> findGraph(Authentication authentication,@PathVariable("graphId") UUID graphId) {
-        return new ResponseEntity<>(this.graphService.findGraph(authentication,graphId),HttpStatus.OK);
+    public ResponseEntity<GraphDao> findGraph(Authentication authentication, @PathVariable("graphId") UUID graphId) {
+        return new ResponseEntity<GraphDao>(this.graphService.findGraph(authentication,graphId),HttpStatus.OK);
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<Graph>> findAllGraph(Authentication authentication) {
+    public ResponseEntity<List<GraphDao>> findAllGraph(Authentication authentication) {
         return new ResponseEntity<>(this.graphService.findAllGraph(authentication),HttpStatus.OK);
     }
 
     @PutMapping("/{graphId}")
-    public ResponseEntity<Graph> updateGraph(Authentication authentication, @RequestBody GraphSaveRequest graphSaveRequest) {
-        return new ResponseEntity<>(this.graphService.updateGraph(authentication,graphSaveRequest),HttpStatus.OK);
+    public ResponseEntity<GraphDao> updateGraph(Authentication authentication, @RequestBody GraphDao graphDao) {
+        return new ResponseEntity<>(this.graphService.updateGraph(authentication,graphDao),HttpStatus.OK);
     }
 
     @DeleteMapping("/{graphId}")

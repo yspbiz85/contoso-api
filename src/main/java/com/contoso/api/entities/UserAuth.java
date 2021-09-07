@@ -32,8 +32,8 @@ public class UserAuth extends Auditable<String> {
     private String email;
 
     //Skip the password from serialization while retrieving user data
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Column(name = "password")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)

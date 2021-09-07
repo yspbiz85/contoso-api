@@ -1,4 +1,4 @@
-package com.contoso.api.model;
+package com.contoso.api.entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

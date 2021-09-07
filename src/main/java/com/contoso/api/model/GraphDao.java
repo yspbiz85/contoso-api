@@ -2,6 +2,7 @@ package com.contoso.api.model;
 
 import com.contoso.api.entities.GraphData;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import javax.validation.constraints.Min;
@@ -12,9 +13,12 @@ import java.util.UUID;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class GraphSaveRequest {
+@Builder
+public class GraphDao {
 
     private UUID id;
+
+    private UUID userId;
 
     @NotEmpty
     @Min(value = 3,message = "Graph name should be minimum 3 character")

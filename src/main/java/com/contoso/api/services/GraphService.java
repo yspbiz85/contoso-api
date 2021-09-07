@@ -1,20 +1,20 @@
 package com.contoso.api.services;
 
 import com.contoso.api.entities.Graph;
-import com.contoso.api.model.GraphSaveRequest;
+import com.contoso.api.model.GraphDao;
 import org.springframework.security.core.Authentication;
 import java.util.List;
 import java.util.UUID;
 
 public interface GraphService {
 
-    Graph saveGraph(Authentication authentication, GraphSaveRequest graphSaveRequest);
+    GraphDao saveGraph(Authentication authentication, GraphDao graphDao);
 
-    Graph findGraph(Authentication authentication, UUID graphId);
+    GraphDao findGraph(Authentication authentication, UUID graphId);
 
-    List<Graph> findAllGraph(Authentication authentication);
+    List<GraphDao> findAllGraph(Authentication authentication);
 
-    Graph updateGraph(Authentication authentication, GraphSaveRequest graphSaveRequest);
+    GraphDao updateGraph(Authentication authentication, GraphDao graphDao);
 
     Boolean deleteGraph(Authentication authentication, UUID graphId);
 

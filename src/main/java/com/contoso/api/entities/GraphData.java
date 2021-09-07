@@ -1,7 +1,5 @@
 package com.contoso.api.entities;
 
-import com.contoso.api.model.Edge;
-import com.contoso.api.model.Node;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
