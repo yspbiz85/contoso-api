@@ -3,10 +3,7 @@ package com.contoso.api.services.impl;
 import com.contoso.api.entities.Edge;
 import com.contoso.api.entities.Graph;
 import com.contoso.api.exceptions.ResourceNotFoundException;
-import com.contoso.api.model.Route;
-import com.contoso.api.model.RouteFilter;
-import com.contoso.api.model.RouteFilterConditions;
-import com.contoso.api.model.RouteMaster;
+import com.contoso.api.model.*;
 import com.contoso.api.repositories.GraphRepository;
 import com.contoso.api.services.GamingService;
 import org.apache.commons.collections4.CollectionUtils;
@@ -41,13 +38,20 @@ public class GamingServiceImpl implements GamingService {
         routeMaster = this.findRoutes(defaultGraphId,Arrays.asList("A","E","D"),null);
         routeMasters.add(routeMaster);
 
-        routeMaster = this.findRoutes(defaultGraphId,Arrays.asList("A","C"),null);
-        routeMasters.add(routeMaster);
-
         RouteFilter routeFilter = new RouteFilter("STOPS",RouteFilterConditions.MAX.name(), 2);
         routeMaster = this.findRoutes(defaultGraphId,Arrays.asList("A","C"),routeFilter);
         routeMasters.add(routeMaster);
 
+        return routeMasters;
+    }
+
+    @Override
+    public List<RouteMaster> findGraphData(MasterGraphSearch masterGraphSearch) {
+        List<RouteMaster> routeMasters = new ArrayList<>();
+        masterGraphSearch.getGraphSearches().stream().forEach(graphSearch -> {
+            routeMasters.add(this.findRoutes(graphSearch.getGraphId(),
+                    graphSearch.getRoutes(),null));
+        });
         return routeMasters;
     }
 
