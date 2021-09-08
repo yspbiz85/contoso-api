@@ -141,11 +141,13 @@ public class GraphServiceImpl implements GraphService {
         isValidEdges = CollectionUtils.isEqualCollection(baseNodes,edgeNodes);
 
         //Verify All the edges have a weight
-        Set<Edge> filterNodes = graphDao.getGraphData().getEdges().stream().filter(edge -> ObjectUtils.isNotEmpty(edge.getWeight())
-                        && !StringUtils.equals(edge.getSource(),edge.getTarget()))
-                                .collect(Collectors.toSet());
+        List<Edge> filterNodes = graphDao.getGraphData().getEdges().stream()
+                .filter(edge -> ObjectUtils.isNotEmpty(edge.getWeight()))
+                .filter(edge -> !edge.getSource().equals(edge.getTarget()))
+                .collect(Collectors.toList());
 
-        isValidEdges = edgeNodes.size() == filterNodes.size();
+
+        isValidEdges = graphDao.getGraphData().getEdges().size() == filterNodes.size();
 
         return isValidEdges;
     }
