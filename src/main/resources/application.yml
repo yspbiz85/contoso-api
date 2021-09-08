@@ -1,0 +1,28 @@
+app:
+  default:
+    graph:
+      id: 01564b4e-cd7c-4e75-9149-fe2a5983af59
+  token:
+    audience: ${TOKEN_AUDIENCE}
+    expiration: 25
+    issuer: ${TOKEN_ISSUER}
+    secret: ${TOKEN_SECRET}
+spring:
+  datasource:
+    password: ${PG_PASSWORD}
+    url: jdbc:postgresql://${PG_HOST}:${PG_PORT}/${PG_DB}
+    username: ${PG_USERNAME}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        default_schema: contoso
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        jdbc:
+          lob:
+            non_contextual_creation: true
+    show-sql: true
+
+server:
+  port : 8000
