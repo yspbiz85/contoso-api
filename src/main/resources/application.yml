@@ -1,7 +1,7 @@
 app:
   default:
     graph:
-      id: 01564b4e-cd7c-4e75-9149-fe2a5983af59
+      id: 7dd1a115-254a-4bfe-9aee-e66094685b3a
   token:
     audience: ${TOKEN_AUDIENCE}
     expiration: 25
